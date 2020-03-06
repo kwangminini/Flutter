@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'cupertino_page.dart';
 void main() => runApp(MyApp());
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-//      home: HelloPage("헬로 월드")
-        home: CuppertinoPage()
+      home: HelloPage("헬로 월드")
+//        home: CuppertinoPage()
     );
   }
 }
@@ -52,7 +53,19 @@ class _HelloPageState extends State<HelloPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(_message,style: TextStyle(fontSize: 30)),
-            Text('$_counter',style: TextStyle(fontSize: 30))
+            Text('$_counter',style: TextStyle(fontSize: 30)),
+            RaisedButton(
+              child: Text('화면 이동'),
+              onPressed: (){
+//                  Navigator.push(
+//                    context,
+//                    CupertinoPageRoute(builder: (context)=>CuppertinoPage())
+//                  );    //Cupertino 방식은 페이지가 오른쪽에서 왼쪽으로 올라온다
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=>CuppertinoPage())
+                  );        //Material  방식은 페이지가 아래에서 위로 올라온다
+              },
+            )
           ],
         )));
   }
