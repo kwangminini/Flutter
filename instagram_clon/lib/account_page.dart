@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AccountPage extends StatefulWidget {
+
+  final FirebaseUser user;
+  AccountPage(this.user);
   @override
   _AccountPageState createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(); //구글 로그아웃을 위한 설정
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +26,10 @@ class _AccountPageState extends State<AccountPage> {
       actions: <Widget>[
         IconButton(
             icon: Icon(Icons.exit_to_app),
-            onPressed: null)
+            onPressed: (){
+              FirebaseAuth.instance.signOut();
+              _googleSignIn.signOut();
+            })
       ],
     );
   }
@@ -39,7 +49,7 @@ class _AccountPageState extends State<AccountPage> {
                     width: 80.0,
                     height: 80.0,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2017/09/21/19/12/france-2773030_1280.jpg'),
+                      backgroundImage: NetworkImage(widget.user.photoUrl),
                     ),
                   ),
                   Container( // + 모양의 FloatingActionButton을 우측 아래로 보내기 위해 Container로 묶고 alignment 설정한다
@@ -70,7 +80,7 @@ class _AccountPageState extends State<AccountPage> {
 
               ),
               Padding(padding: EdgeInsets.all(8.0),),
-              Text('KwangMin',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),)
+              Text(widget.user.displayName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),)
 
             ],
           ),
